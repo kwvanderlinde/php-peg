@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Kwv\Peg\Combinators;
+namespace Tests\Kwv\Peg;
 
-use Kwv\Peg\Combinators\StringView;
+use Kwv\Peg\StringView;
 
 
 /**
- * @coversDefaultClass Kwv\Peg\Combinators\StringView
+ * @coversDefaultClass Kwv\Peg\StringView
  */
 class StringViewTest extends \Tests\Kwv\Peg\TestCase
 {
@@ -117,5 +117,49 @@ class StringViewTest extends \Tests\Kwv\Peg\TestCase
 		$stringView = new StringView("This\nis\na\nmultiline\input", 6, 5, 0, 0);
 		$expectedColumnNumber = 1;
 		$this->assertNotSame($expectedColumnNumber, $stringView->getColumnNumber(), 'The line number does not correspond to the true line number.');
+	}
+
+	/**
+	 * @param string $string
+	 *   The string to wrap in a `StringView`.
+	 * @param int $offset
+	 *   The offset into the string.
+	 * @param int $length
+	 *   The length of the view.
+	 * @param mixed $test
+	 *   The value to test against.
+	 * @param bool $expected
+	 *   Whether `$test` is expected to be found at the start of the `StringView`.
+	 * @param array|null $expectedException
+	 *   The expected exception, or `null` if no exception is expected.
+	 *
+	 * @covers ::startsWith
+	 * @dataProvider startsWithProvider
+	 */
+	public function testStartsWith(string $string, int $offset, int $length, $test, bool $expected, array $expectedException = null)
+	{
+		if (null !== $expectedException)
+		{
+			$this->expectFullException(...$expectedException);
+		}
+
+		$input = new StringView($string, $offset, $length, 0, 0);
+		$result = $input->startsWith($test);
+		$this->assertSame($expected, $result, 'Input ' . ($expected ? 'starts' : 'does not start') . " with '{$test}'.");
+	}
+
+	public function startsWithProvider()
+	{
+		$testString = 'This is a good day';
+
+		return [
+			[ $testString, 0, 18, 'This', true ],
+			[ $testString, 0, 18, 'That', false ],
+			[ $testString, 0, 18, 'this', false ],
+			[ $testString, 0, 18, 'good', false ],
+			[ $testString, 0, 4, 'This', true ],
+			[ $testString, 0, 3, 'This', false ],
+			'Cannot call startsWith with an object' => [ $testString, 0, 3, new \stdClass, false, [ \TypeError::class ] ],
+		];
 	}
 }

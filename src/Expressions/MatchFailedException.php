@@ -1,7 +1,13 @@
 <?php
-namespace Kwv\Peg\Combinators;
+namespace Kwv\Peg\Expressions;
 
-class MatchFailedException extends \Base\Exceptions\Contingency
+use Base\Exceptions\BaseException;
+use Base\Exceptions\Contingency;
+
+use Kwv\Peg\StringView;
+
+
+class MatchFailedException extends BaseException implements Contingency
 {
 	/**
 	 * @var Expression
@@ -17,7 +23,7 @@ class MatchFailedException extends \Base\Exceptions\Contingency
 
 	public function __construct(Expression $expression, StringView $input, \Throwable $previous = null)
 	{
-		parent::__construct('Failed to parse expression', 0, $previous);
+		parent::__construct('Failed to parse expression', $previous);
 
 		$this->expression = $expression;
 		$this->input = $input;

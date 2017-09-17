@@ -1,5 +1,7 @@
 <?php
-namespace Kwv\Peg\Combinators;
+namespace Kwv\Peg\Expressions;
+
+use Kwv\Peg\StringView;
 
 
 /**

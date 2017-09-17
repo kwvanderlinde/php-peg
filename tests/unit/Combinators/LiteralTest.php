@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Kwv\Peg\Combinators;
+namespace Tests\Kwv\Peg\Expressions;
 
-use Kwv\Peg\Combinators\Expression;
-use Kwv\Peg\Combinators\Literal;
-use Kwv\Peg\Combinators\StringView;
-use Kwv\Peg\Combinators\MatchFailedException;
+use Kwv\Peg\Expressions\Expression;
+use Kwv\Peg\Expressions\Literal;
+use Kwv\Peg\Expressions\MatchFailedException;
+use Kwv\Peg\StringView;
 
 
 /**
- * @coversDefaultClass Kwv\Peg\Combinators\Literal
+ * @coversDefaultClass Kwv\Peg\Expressions\Literal
  */
 class LiteralTest extends \Tests\Kwv\Peg\TestCase
 {

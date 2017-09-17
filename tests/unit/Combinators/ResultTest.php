@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Kwv\Peg\Combinators\Helpers;
+namespace Tests\Kwv\Peg\Expressions\Helpers;
 
-use Kwv\Peg\Combinators\Result;
+use Kwv\Peg\Expressions\Result;
 
 
 /**
- * @coversDefaultClass Kwv\Peg\Combinators\Result
+ * @coversDefaultClass Kwv\Peg\Expressions\Result
  */
 class ResultTest extends \Tests\Kwv\Peg\TestCase
 {

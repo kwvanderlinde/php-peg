@@ -1,5 +1,7 @@
 <?php
-namespace Kwv\Peg\Combinators;
+namespace Kwv\Peg;
+
+use InvalidArgumentException;
 
 
 /**
@@ -57,23 +59,23 @@ class StringView
 	{
 		if ($offset < 0)
 		{
-			throw new \InvalidArgumentException('Offset must not be negative.');
+			throw new InvalidArgumentException('Offset must not be negative.');
 		}
 		if ($length < 0)
 		{
-			throw new \InvalidArgumentException('Length must not be negative.');
+			throw new InvalidArgumentException('Length must not be negative.');
 		}
 		if ($offset + $length > \strlen($string))
 		{
-			throw new \InvalidArgumentException('View cannot extend past the end of the string.');
+			throw new InvalidArgumentException('View cannot extend past the end of the string.');
 		}
 		if ($lineNumber < 0)
 		{
-			throw new \InvalidArgumentException('Line number must not be negative.');
+			throw new InvalidArgumentException('Line number must not be negative.');
 		}
 		if ($columnNumber < 0)
 		{
-			throw new \InvalidArgumentException('Column number must not be negative.');
+			throw new InvalidArgumentException('Column number must not be negative.');
 		}
 
 		$this->string = $string;
@@ -91,5 +93,17 @@ class StringView
 	public function getColumnNumber(): int
 	{
 		return $this->columnNumber;
+	}
+
+	public function startsWith(string $prefix): bool
+	{
+		if (strlen($prefix) > $this->length)
+		{
+			// No way we can match a string larger than our viewing window!
+			return false;
+		}
+
+		// Now we just need to see if the string exists at our current offset.
+		return 0 === strpos($this->string, $prefix, $this->offset);
 	}
 }

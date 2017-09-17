@@ -1,5 +1,5 @@
 <?php
-namespace Kwv\Peg\Combinators;
+namespace Kwv\Peg\Expressions;
 
 
 /**
