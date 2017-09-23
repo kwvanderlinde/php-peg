@@ -13,7 +13,7 @@ use Kwv\Peg\StringView;
  * It is useful, however, since it encapsulate the concept of a character class
  * and provides a convenient way to define lexical tokens.
  *
- * Note: this is meant to match a string starting at a specific point. Anchors
+ * Note: this is meant to a match a string starting at a specific point. Anchors
  * will not work as expected, and the start of the match will be enforced to be
  * the start of input view.
  */
@@ -44,11 +44,6 @@ class Regex implements Expression
 	 */
 	public function parse(StringView $input): Result
 	{
-		if (0 === $input->getLength())
-		{
-			throw new ParseFailedException($this, $input);
-		}
-
 		try
 		{
 			$match = $input->matchRegex($this->regex);

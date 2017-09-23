@@ -91,8 +91,8 @@ class RegexTest extends \Tests\Kwv\Peg\TestCase
 		return [
 			'Single character class parses' => [ '/t/', new StringView('this is a string', 0, 4, 1, 2), 1, 2, 't' ],
 			'Single character class fails to parse' => [ '/u/', new StringView('this is a string', 0, 4, 1, 2), 1, 2, '', [ ParseFailedException::class ] ],
-			//'Literal does not parse if case is wrong' => [ 'This', new StringView('this is a string', 0, 4, 1, 2), 1, 2, '', [ ParseFailedException::class ] ],
-			//'Literal parse fails with ParseFailedException' => [ 'not this', new StringView('this is a string', 0, 4, 1, 2), 1, 2, '', [ ParseFailedException::class ] ],
+			'Non-empty regex fails on empty input' => [ '/u/', new StringView('', 0, 0, 0, 0), 0, 0, '', [ ParseFailedException::class ] ],
+			'Empty regex succeeds on empty input' => [ '//', new StringView('', 0, 0, 0, 0), 0, 0, '' ],
 		];
 	}
 }
