@@ -24,11 +24,14 @@ class Literal implements Expression
 		$this->literal = $literal;
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function parse(StringView $input): Result
 	{
 		if (!$input->startsWith($this->literal))
 		{
-			throw new MatchFailedException($this, $input);
+			throw new ParseFailedException($this, $input);
 		}
 
 		return new Result($input->getLineNumber(), $input->getColumnNumber(), $this->literal);

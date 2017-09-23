@@ -9,21 +9,21 @@ use TypeError;
 use Base\Exceptions\Contingency;
 
 use Kwv\Peg\Expressions\Expression;
-use Kwv\Peg\Expressions\MatchFailedException;
+use Kwv\Peg\Expressions\ParseFailedException;
 use Kwv\Peg\StringView;
 
 
 /**
- * @coversDefaultClass Kwv\Peg\Expressions\MatchFailedException
+ * @coversDefaultClass Kwv\Peg\Expressions\ParseFailedException
  */
-class MatchFailedExceptionTest extends \Tests\Kwv\Peg\TestCase
+class ParseFailedExceptionTest extends \Tests\Kwv\Peg\TestCase
 {
 	/**
 	 * @coversNothing
 	 */
 	public function testIsAnException()
 	{
-		$this->assertSubtypeOf(Exception::class, MatchFailedException::class);
+		$this->assertSubtypeOf(Exception::class, ParseFailedException::class);
 	}
 
 	/**
@@ -31,7 +31,7 @@ class MatchFailedExceptionTest extends \Tests\Kwv\Peg\TestCase
 	 */
 	public function testIsAnContingency()
 	{
-		$this->assertSubtypeOf(Contingency::class, MatchFailedException::class);
+		$this->assertSubtypeOf(Contingency::class, ParseFailedException::class);
 	}
 
 	/**
@@ -50,8 +50,8 @@ class MatchFailedExceptionTest extends \Tests\Kwv\Peg\TestCase
 			$this->expectFullException(...$expectedException);
 		}
 
-		$instance = new MatchFailedException(...$args);
-		$this->assertInstanceOf(MatchFailedException::class, $instance);
+		$instance = new ParseFailedException(...$args);
+		$this->assertInstanceOf(ParseFailedException::class, $instance);
 	}
 
 	public function constructProvider()
@@ -82,7 +82,7 @@ class MatchFailedExceptionTest extends \Tests\Kwv\Peg\TestCase
 	 */
 	public function testGetExpression(array $args, Expression $expression)
 	{
-		$instance = new MatchFailedException(...$args);
+		$instance = new ParseFailedException(...$args);
 		$this->assertSame($expression, $instance->getExpression());
 	}
 
@@ -107,7 +107,7 @@ class MatchFailedExceptionTest extends \Tests\Kwv\Peg\TestCase
 	 */
 	public function testLineNumber(array $args, int $lineNumber)
 	{
-		$instance = new MatchFailedException(...$args);
+		$instance = new ParseFailedException(...$args);
 		$this->assertSame($lineNumber, $instance->getLineNumber());
 	}
 
@@ -136,7 +136,7 @@ class MatchFailedExceptionTest extends \Tests\Kwv\Peg\TestCase
 	 */
 	public function testColumnNumber(array $args, int $columnNumber)
 	{
-		$instance = new MatchFailedException(...$args);
+		$instance = new ParseFailedException(...$args);
 		$this->assertSame($columnNumber, $instance->getColumnNumber());
 	}
 
@@ -164,7 +164,7 @@ class MatchFailedExceptionTest extends \Tests\Kwv\Peg\TestCase
 	 */
 	public function testGetPrevious(array $args, \Throwable $previous = null)
 	{
-		$instance = new MatchFailedException(...$args);
+		$instance = new ParseFailedException(...$args);
 		$this->assertSame($previous, $instance->getPrevious());
 	}
 

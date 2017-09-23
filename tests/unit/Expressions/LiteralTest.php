@@ -5,7 +5,7 @@ namespace Tests\Kwv\Peg\Expressions;
 
 use Kwv\Peg\Expressions\Expression;
 use Kwv\Peg\Expressions\Literal;
-use Kwv\Peg\Expressions\MatchFailedException;
+use Kwv\Peg\Expressions\ParseFailedException;
 use Kwv\Peg\StringView;
 
 
@@ -14,6 +14,11 @@ use Kwv\Peg\StringView;
  */
 class LiteralTest extends \Tests\Kwv\Peg\TestCase
 {
+	public function testIsExpression()
+	{
+		$this->assertSubtypeOf(Expression::class, Literal::class);
+	}
+
 	/**
 	 * @param mixed[] $args
 	 *   The arguments to pass to the constructor.
@@ -32,7 +37,6 @@ class LiteralTest extends \Tests\Kwv\Peg\TestCase
 
 		$instance = new Literal(...$args);
 		$this->assertInstanceOf(Literal::class, $instance);
-		$this->assertInstanceOf(Expression::class, $instance);
 	}
 
 	public function constructProvider()
@@ -50,15 +54,15 @@ class LiteralTest extends \Tests\Kwv\Peg\TestCase
 
 	/**
 	 * @param string $literal
-	 *   The literal string to match.
+	 *   The literal string to parse.
 	 * @param StringView $input
-	 *   The input view against which the literal will be matched.
+	 *   The input view against which the literal will be parsed.
 	 * @param int $expectedLineNumber
-	 *   The expected line number of the match.
+	 *   The expected line number of the parse.
 	 * @param int $expectedColumnNumber
-	 *   The expected column number of the match.
+	 *   The expected column number of the parse.
 	 * @param mixed $expectedValue
-	 *   The expected value of the match.
+	 *   The expected value of the parse.
 	 * @param array|null $expectedException
 	 *   The expected exception, or `null` if no exception is expected.
 	 *
@@ -76,16 +80,17 @@ class LiteralTest extends \Tests\Kwv\Peg\TestCase
 
 		$result = $literal->parse($input);
 
-		$this->assertSame($expectedLineNumber, $result->getLineNumber(), 'The match occurred on the correct line.');
-		$this->assertSame($expectedColumnNumber, $result->getColumnNumber(), 'The match occurred in the correct column.');
-		$this->assertSame($expectedValue, $result->getValue(), 'The match produced the correct value.');
+		$this->assertSame($expectedLineNumber, $result->getLineNumber(), 'The parse occurred on the correct line.');
+		$this->assertSame($expectedColumnNumber, $result->getColumnNumber(), 'The parse occurred in the correct column.');
+		$this->assertSame($expectedValue, $result->getValue(), 'The parse produced the correct value.');
 	}
 
 	public function parseProvider()
 	{
 		return [
-			'Literal matches start of input view' => [ 'this', new StringView('this is a string', 0, 4, 1, 2), 1, 2, 'this' ],
-			'Literal match fails with MatchFailedException' => [ 'not this', new StringView('this is a string', 0, 4, 1, 2), 1, 2, '', [ MatchFailedException::class ] ],
+			'Literal parses start of input view' => [ 'this', new StringView('this is a string', 0, 4, 1, 2), 1, 2, 'this' ],
+			'Literal does not parse if case is wrong' => [ 'This', new StringView('this is a string', 0, 4, 1, 2), 1, 2, '', [ ParseFailedException::class ] ],
+			'Literal parse fails with ParseFailedException' => [ 'not this', new StringView('this is a string', 0, 4, 1, 2), 1, 2, '', [ ParseFailedException::class ] ],
 		];
 	}
 }
