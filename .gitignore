@@ -1,6 +1,6 @@
 composer.lock
 vendor/
-tests/output
+_generated/
 phpunit.xml
 docs/
 phpdoc.xml
