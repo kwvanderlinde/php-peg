@@ -2,3 +2,5 @@ composer.lock
 vendor/
 tests/output
 phpunit.xml
+docs/
+phpdoc.xml
